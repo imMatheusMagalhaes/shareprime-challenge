@@ -1,4 +1,5 @@
-import { WheelEvent, FunctionComponent } from "react";
+import { WheelEvent, FunctionComponent, useState } from "react";
+import { store } from "../../store/store";
 import "./Corousel.css";
 
 export interface IItemsProps {
@@ -12,8 +13,10 @@ interface ICorouselProps {
   items: IItemsProps[];
 }
 
-const Corousel: FunctionComponent<ICorouselProps> = (props) => {
-  const { items } = props;
+const Corousel: FunctionComponent = () => {
+  const [items, setItems] = useState<IItemsProps[]>(store.getState().item);
+  const handleStateChange = () => setItems(store.getState().item);
+  store.subscribe(handleStateChange);
   const mouseWheel = (event: WheelEvent) => {
     if (event.deltaY > 0) return event.currentTarget.scrollBy(300, 0);
     else return event.currentTarget.scrollBy(-300, 0);
