@@ -1,32 +1,19 @@
-import { Stack } from "@fluentui/react";
 import { FunctionComponent } from "react";
+import { useNavigate } from "react-router-dom";
+import "./header.css";
 
-interface HeaderProps {}
-
-const Header: FunctionComponent<HeaderProps> = () => {
+const Header: FunctionComponent = () => {
+  const navigate = useNavigate();
   return (
-    <Stack
-      verticalAlign="start"
-      styles={{
-        root: {
-          overflow: "hidden",
-          backgrounColor: "#f1f1f1",
-          padding: "20px 10px",
-          backgroundColor: "whitesmoke",
-        },
-      }}
-    >
-      <Stack.Item
-        styles={{
-          root: {
-            fontSize: 25,
-            fontWeight: "bold",
-          },
-        }}
-      >
-        SharePrime Challeger
-      </Stack.Item>
-    </Stack>
+    <div id="header">
+      <div id="logo">Carousel Challenger</div>
+      <div id="header-right">
+        <div id="active" onClick={() => navigate("/")}>
+          Início
+        </div>
+        <div onClick={() => navigate("/admin")}>Administração</div>
+      </div>
+    </div>
   );
 };
 

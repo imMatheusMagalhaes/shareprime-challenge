@@ -1,0 +1,43 @@
+#header {
+  overflow: hidden;
+  background-color: #f1f1f1;
+  padding: 12px;
+  text-align: center;
+}
+
+#header div {
+  color: black;
+  padding: 12px;
+  text-decoration: none;
+  font-size: 18px;
+  line-height: 15px;
+  cursor: pointer;
+}
+
+#header div#logo {
+  float: left;
+  font-size: 30px;
+}
+
+#header div#active {
+  background-color: dodgerblue;
+  color: white;
+}
+
+#header-right {
+  float: right;
+  display: table
+}
+#header-right div{
+  display: table-cell;
+}
+
+@media screen and (max-width: 500px) {
+  #header div#logo {
+    float: none;
+    display: block;
+  }
+  #header-right {
+    float: none;
+  }
+}

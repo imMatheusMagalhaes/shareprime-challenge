@@ -4,7 +4,7 @@ import { FieldError, UseFormRegister } from "react-hook-form";
 import { IFormModel } from "../../pages/insert-form/InsertForm";
 
 interface CustomTextFieldProps {
-  id: "link" | "title" | "image" | "order";
+  id: "title" | "link" | "order" | "image";
   label: string;
   type?: string;
   error: FieldError | undefined;
@@ -12,7 +12,7 @@ interface CustomTextFieldProps {
 }
 
 const CustomTextField: FunctionComponent<CustomTextFieldProps> = (props) => {
-  const { error, register, id, label, type } = props;
+  const { error, register, id, label, type = "text" } = props;
   return (
     <TextField
       type={type}

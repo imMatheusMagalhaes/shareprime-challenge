@@ -1,4 +1,4 @@
-import { FunctionComponent } from "react";
+import { FunctionComponent, useState } from "react";
 import { Stack } from "@fluentui/react/lib/Stack";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { DefaultButton, Label, PrimaryButton } from "@fluentui/react";
@@ -6,9 +6,10 @@ import { useBoolean } from "@fluentui/react-hooks";
 import InputFileModal from "../../components/input-file-modal/InputFileModal";
 import { store } from "../../store/store";
 import { addItem } from "../../store/item.store";
-import "./insert-form.css";
 import { fileButton, form } from "./insert-form.styles";
 import CustomTextField from "../../components/custom-text-field/CustomTextField";
+import { useNavigate } from "react-router-dom";
+import "./insert-form.css";
 
 export interface IFormModel {
   title: string;
@@ -20,26 +21,25 @@ export interface IFormModel {
 const InsertForm: FunctionComponent = () => {
   const [isModalOpen, { setTrue: showModal, setFalse: hideModal }] =
     useBoolean(false);
-
+  const [imageSent, setImageSent] = useState<boolean | undefined>(undefined);
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
     formState: { errors },
     setValue,
     getValues,
-    reset,
   } = useForm<IFormModel>();
-
   const handleOnSubmit: SubmitHandler<IFormModel> = (event) => {
-    store.dispatch(addItem(event));
-    return reset();
+    if (getValues().image) {
+      store.dispatch(addItem(event));
+      setImageSent(true);
+      return navigate("/");
+    }
+    return setImageSent(false);
   };
-
-  const readyToShip = (fields: IFormModel) =>
-    !fields.image || !fields.link || !fields.order || !fields.title;
-
   return (
-    <Stack horizontalAlign="center" verticalAlign="center" id="form-wrapper">
+    <Stack horizontalAlign="center" verticalAlign="start" id="form-wrapper">
       <Stack
         id="form"
         horizontalAlign="center"
@@ -80,10 +80,12 @@ const InsertForm: FunctionComponent = () => {
             styles={fileButton(getValues().image)}
             onClick={showModal}
           />
+          {imageSent === false && (
+            <span id="span-error-image">Campo Obrigatório</span>
+          )}
         </Stack.Item>
         <Stack.Item>
           <PrimaryButton
-            disabled={readyToShip(getValues())}
             styles={{ root: { width: "100%" } }}
             text="Registrar!"
             onClick={handleSubmit(handleOnSubmit)}

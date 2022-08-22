@@ -1,16 +1,17 @@
 import { FunctionComponent } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Header from "../components/header/Header";
+import Home from "./home/Home";
 import InsertForm from "./insert-form/InsertForm";
 
 const Routers: FunctionComponent = () => {
   return (
     <BrowserRouter>
-        <Header />
-
+      <Header />
       <Routes>
-        <Route index element={<InsertForm />} />
-        {/* <Route path="/write/:id" element={<Write />} /> */}
+        <Route path="/admin" element={<InsertForm />} />
+        <Route path="/home" element={<Home />} />
+        <Route path="*" element={<Home />} />
       </Routes>
     </BrowserRouter>
   );
