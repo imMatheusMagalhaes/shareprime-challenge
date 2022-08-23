@@ -5,7 +5,7 @@ import "./home.css"
 const Home: FunctionComponent = () => {
   return (
     <div id="home">
-      <Carousel />;
+      <Carousel />
     </div>
   );
 };
